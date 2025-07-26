@@ -1,19 +1,26 @@
 import MunicipioSelector from '@/components/municipiosSelector';
 import { ThemedView } from '@/components/ThemedView';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 
 export default function HomeScreen() {
 
+  const [weatherData, setWeatherData] = useState(null);
   const handleSelect = (municipio: any) => {
     console.log('Municipio seleccionado:', municipio);
   };
   return (
     <View style={styles.screen}>
     <ThemedView style={styles.container}>
-      <MunicipioSelector onSelect={handleSelect} />
+      <MunicipioSelector setWeatherData={setWeatherData} />
     </ThemedView>
+
+    {weatherData && (
+      <View>
+        <Text>Sensación Térmica: {weatherData.main.feels_like}°C</Text>
+      </View>
+    )}
   </View>
   );
 }

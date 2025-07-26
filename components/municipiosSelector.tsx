@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
+import config from '../config/config.json';
 import Municipios from '../municipios-es-coordenadas.json';
 
 type Item = {label: string, value: string}
+type Props = {
+  setWeatherData: (weatherData: any) => void;
+};
 
-export default function MunicipioDropdown() {
+export default function MunicipioDropdown({setWeatherData} : Props) {
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [items, setItems] = useState<Item[]>([]);
+  const apiKey = config.OPENWEATHER_API_KEY;
+
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -26,6 +32,19 @@ export default function MunicipioDropdown() {
       setItems([])
     }
   }
+  
+useEffect(() => {
+  if (value !== null) {
+    console.log("Nuevo municipio seleccionado:", value);
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${apiKey}&units=metric`)
+      .then(res => res.json())
+      .then(data => {
+        setWeatherData(data);
+      })
+      .catch(err => console.error("Error:", err));
+  }
+}, [value]);
+
 
   return (
     <DropDownPicker
