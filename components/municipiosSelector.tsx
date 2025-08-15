@@ -5,10 +5,10 @@ import Municipios from '../municipios-es-coordenadas.json';
 
 type Item = {label: string, value: string}
 type Props = {
-  setWeatherData: (weatherData: any) => void;
+  setMunicipio: (municipio: any) => void;
 };
 
-export default function MunicipioDropdown({setWeatherData} : Props) {
+export default function MunicipioDropdown({setMunicipio} : Props) {
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -26,7 +26,9 @@ export default function MunicipioDropdown({setWeatherData} : Props) {
           value: municipioFiltrado.id,
         }
       })
-      setItems(filtered)
+      setItems(filtered);
+      
+
     }
     else {
       setItems([])
@@ -35,13 +37,9 @@ export default function MunicipioDropdown({setWeatherData} : Props) {
   
 useEffect(() => {
   if (value !== null) {
-    console.log("Nuevo municipio seleccionado:", value);
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${apiKey}&units=metric`)
-      .then(res => res.json())
-      .then(data => {
-        setWeatherData(data);
-      })
-      .catch(err => console.error("Error:", err));
+    console.log(value)
+    setMunicipio(value);
+    
   }
 }, [value]);
 
