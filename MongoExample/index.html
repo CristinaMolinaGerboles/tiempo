@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Hello, Vue</title>
+</head>
+<body>
+    <div id="app">
+        <!-- This is your Vue app -->
+        <h1>Player List</h1>
+        
+        <input type="text" v-model="newPlayerName" placeholder="Player Name">
+        <input type="text" v-model="newPlayerPosition" placeholder="Position Played">
+        <input type="text" v-model="newPlayerDorsal" placeholder="Dorsal Number">
+        
+        <button v-on:click="addPlayer">Add Player</button>
+
+        <ol>
+            <li v-for="player in players">
+                {{ player.name }} plays as {{ player.position }} and wears dorsal number {{ player.dorsal }}
+            </li>
+        </ol>
+    </div>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
